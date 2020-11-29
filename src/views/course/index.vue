@@ -15,8 +15,8 @@
 </template>
 
 <script>
-    import Welcome from "../components/Sidebar";
-    import Navbar from "../components/Navbar";
+    import Welcome from "../../components/course/Sidebar";
+    import Navbar from "../../components/course/Navbar";
 
     export default {
         name: "index",
