@@ -1,13 +1,23 @@
 <template>
     <div class="wrapper">
         <div class="login-container">
-            <el-form ref="form">
+            <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
                 <p>login form</p>
-                <el-form-item>
-                    <el-input v-model="form.username" placeholder="用户名"></el-input>
+                <el-form-item prop="username">
+                    <el-input
+                        v-model="loginForm.username"
+                        placeholder="用户名"
+                        ref="username">
+                    </el-input>
                 </el-form-item>
-                <el-form-item>
-                    <el-input class="paw" type="password" v-model="form.password" placeholder="密码"></el-input>
+                <el-form-item prop="password">
+                    <el-input
+                        class="paw"
+                        type="password"
+                        v-model="loginForm.password"
+                        placeholder="密码"
+                        ref="password">
+                    </el-input>
                 </el-form-item>
                 <el-form-item class="btn">
                     <el-button size="medium" type="primary" @click="onSubmit">登录</el-button>
@@ -21,19 +31,45 @@
 <script>
     export default {
         name: "login",
-        data(){
+        data() {
             return{
-                form:{
-                    username:'',
-                    password:''
-                }
+                loginForm:{
+                    username:'admin',
+                    password:'123456'
+                },
+                loginRules: {
+                    username: [{ required: true, trigger: 'blur', message:'请输入用户名' }],
+                    password: [
+                        { required: true, trigger: 'blur', message:'请输入密码'},
+                        { min:6, max:12, message: '长度为6到12个字符',trigger: 'blur'}
+                    ]
+                },
             }
         },
         methods:{
             onSubmit() {
-                this.$http.get('http://localhost:8081/login').then((response) => {
-                    console.log(response.data)
+                this.$refs.loginForm.validate(valid =>{
+                    if(valid){
+                        this.$http.post('http://localhost:8081/login',this.loginForm).then((response) => {
+                            console.log(response);
+                            if(response.data.code===200){
+                                this.$router.push({
+                                    path:'/home',
+                                    query:{
+                                        role:response.data.role
+                                    }
+                                })
+                            }else{
+                                alert("用户名或密码错误！")
+                            }
+                        })
+
+                    }else {
+                        console.log('error submit!!')
+                        return false
+                    }
                 })
+
             }
         }
     }
@@ -46,7 +82,7 @@
 }
 .el-form{
     position: relative;
-    top: 150px;
+    top: 145px;
     width: 330px;
     padding:20px;
     margin:0 auto;
@@ -62,7 +98,7 @@
         width: 100%;
     }
     .btn{
-       margin:30px 0 0 0;
+       margin:32px 0 0 0;
     }
 }
 </style>

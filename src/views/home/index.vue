@@ -10,8 +10,8 @@
 </template>
 
 <script>
-    import Navbar from "../../components/main/Navbar";
-    import CourseArea from "../../components/main/courseArea";
+    import Navbar from "../../components/home/Navbar";
+    import CourseArea from "../../components/home/courseArea";
 
     export default {
         name: "index",
@@ -25,7 +25,7 @@
         background-color: #f7f5f9;
     }
     .el-main{
-
+        padding:40px 0 0 50px;
     }
     .el-header{
         padding: 0;
