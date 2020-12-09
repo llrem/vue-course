@@ -7,7 +7,7 @@
             <a>我的课程</a>/
             <a>通知</a>/
             <a>作业</a>
-            <a class="out">loginOut</a>
+            <a class="out">logout</a>
         </div>
     </div>
 </template>

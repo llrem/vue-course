@@ -3,7 +3,7 @@
         <el-menu-item index="1">
             <template slot="title">
                 <i class="el-icon-menu"></i>
-                <span slot="title">课程名</span>
+                <span slot="title">课程</span>
             </template>
         </el-menu-item>
         <el-menu-item index="2">

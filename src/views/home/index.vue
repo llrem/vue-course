@@ -4,7 +4,7 @@
             <Navbar/>
         </el-header>
         <el-main>
-            <courseArea/>
+            <router-view/>
         </el-main>
     </el-container>
 </template>
@@ -15,7 +15,12 @@
 
     export default {
         name: "index",
-        components: {CourseArea, Navbar}
+        components: {CourseArea, Navbar},
+        created() {
+            this.$http.post('http://localhost:8081/home').then((response) => {
+                console.log(response);
+            })
+        }
     }
 </script>
 

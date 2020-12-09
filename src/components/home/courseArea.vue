@@ -50,9 +50,6 @@
                 })
             },
         },
-        mounted() {
-            console.log(this.$route.query.role)
-        }
     }
 </script>
 

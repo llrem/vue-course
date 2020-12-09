@@ -5,14 +5,25 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path:'/home',
-    name:'home',
+    path:'/',
     component:()=>import('../views/home/index'),
+    redirect: '/home',
+    children: [{
+      path: '/home',
+      name: 'home',
+      component: () => import('../components/home/courseArea'),
+      meta:{
+        requireAuth:true
+      }
+    }]
   },
   {
     path:'/course',
     name:'course',
     component:()=>import('../views/course/index'),
+    meta:{
+      requireAuth:true
+    }
   },
   {
     path: '/login',
