@@ -34,7 +34,7 @@
         data() {
             return{
                 loginForm:{
-                    username:'11821380101',
+                    username:'001',
                     password:'123456'
                 },
                 loginRules: {
@@ -51,18 +51,18 @@
                 this.$refs.loginForm.validate(valid =>{
                     if(valid){
                         const _this = this
+                        console.log(this.loginForm)
                         this.$http.post('http://localhost:8081/login',this.loginForm).then((response) => {
                             console.log(response);
                             // const jwt = response.headers['authorization']
                             const userInfo = response.data.data;
+                            const role = response.data.role;
                             if(response.data.code===200){
                                 // _this.$store.commit("SET_TOKEN",jwt)
+                                _this.$store.commit("SET_ROLE",role);
                                 _this.$store.commit("SET_USERINFO",userInfo)
                                 this.$router.push({
                                     path:'/home',
-                                    query:{
-                                        role:response.data.role
-                                    }
                                 })
                             }else{
                                 alert("用户名或密码错误！")

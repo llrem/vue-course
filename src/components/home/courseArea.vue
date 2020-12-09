@@ -6,12 +6,13 @@
                     <router-link v-if="index<cardNumber-1" to="/course">
                         <div class="image" >
                             <div class="courseInfo">
-                                <a>操作系统</a>
+                                <a style="font-size: 22px">{{courses[index].name}}</a><br>
+                                <a style="font-size: 15px">{{courses[index].className}}</a>
                             </div>
                         </div>
                     </router-link>
-                    <div v-if="index===cardNumber-1&&role==='admin'" :plain="true" @click="addCourse">
-                        <div class="image" >
+                    <div v-if="index===cardNumber-1&&role==='admin'" :plain="true">
+                        <div class="image" @click="dialogFormVisible=true">
                             <div class="courseInfo">
                                 <i class="el-icon-circle-plus-outline"></i>
                                 <p>添加课程</p>
@@ -29,6 +30,27 @@
                 </el-card>
             </el-col>
         </el-row>
+
+        <el-dialog title="添加课程" :visible.sync="dialogFormVisible" width="400px">
+            <el-form :model="form" class="addCourse">
+                <el-form-item label="课程名称">
+                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="班级">
+                    <el-input v-model="form.classId" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="学分">
+                    <el-input v-model="form.credit" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="课时">
+                    <el-input v-model="form.classHour" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addCourse()">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -37,19 +59,41 @@
         name: "courseArea",
         data() {
             return {
-                cardNumber:3,
-                role:this.$route.query.role,
+                courses:[],
+                cardNumber:'',
+                role:this.$store.getters.getRole,
+                form:{
+                    name:'',
+                    classId:'',
+                    credit:'',
+                    classHour:''
+                },
+                dialogFormVisible:false
             };
         },
         methods:{
-            addCourse() {
-                this.$message({
-                    showClose: true,
-                    message:'暂时还不能添加',
-                    type:'warning'
+            addCourse(){
+                const userInfo = sessionStorage.getItem("userInfo")
+
+                this.$http.post('http://localhost:8081/home/addCourse',{
+                    courseInfo:this.form,
+                    admin:JSON.parse(userInfo)
+                }).then((response) => {
+                    console.log(response.data.data())
                 })
-            },
+                this.dialogFormVisible = false
+            }
         },
+        created() {
+            const userInfo = sessionStorage.getItem("userInfo")
+            const role = sessionStorage.getItem("role")
+            const _this = this
+            this.$http.post('http://localhost:8081/home/'+role,JSON.parse(userInfo)).then((response) => {
+                _this.courses=response.data.data;
+                _this.cardNumber=_this.courses.length+1;
+                console.log(_this.courses);
+            })
+        }
     }
 </script>
 
@@ -107,10 +151,35 @@
 .courseInfo{
     padding: 20px;
 }
+.el-form{
+    position: unset;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    .el-form-item{
+        margin: 0;
+    }
+}
 a{
     text-decoration: none;
     &:visited{
         color: #333333;
     }
 }
+</style>
+
+<style lang="scss">
+    .el-dialog{
+        .el-dialog__header{
+            padding: 20px 20px 0 20px;
+        }
+        .el-dialog__body{
+            padding: 10px 20px;
+        }
+        .el-dialog__footer{
+            padding: 10px 20px 25px 0;
+        }
+        border-radius: 15px;
+    }
+
 </style>

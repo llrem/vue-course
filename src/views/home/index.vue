@@ -16,11 +16,11 @@
     export default {
         name: "index",
         components: {CourseArea, Navbar},
-        created() {
-            this.$http.post('http://localhost:8081/home').then((response) => {
-                console.log(response);
-            })
-        }
+        data() {
+            return{
+
+            }
+        },
     }
 </script>
 
