@@ -11,7 +11,7 @@
 
 <script>
     import Navbar from "../../components/home/Navbar";
-    import CourseArea from "../../components/home/courseArea";
+    import CourseArea from "../../components/home/myCourse";
 
     export default {
         name: "index",

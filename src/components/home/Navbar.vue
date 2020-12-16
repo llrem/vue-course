@@ -4,10 +4,11 @@
             <img src="../../assets/moon.png" alt="user"/>
         </el-avatar>
         <div class="option">
-            <a>我的课程</a>/
-            <a>通知</a>/
-            <a>作业</a>
-            <a class="out">logout</a>
+            <router-link to="/home"><a>我的课程</a></router-link>/
+            <router-link to="/notice"><a>通知</a></router-link>/
+            <router-link to="/homework"><a>作业</a></router-link>/
+            <router-link to="/archive"><a>归档课程</a></router-link>
+            <router-link to="/login"><a class="out" @click="logout">退出</a></router-link>
         </div>
     </div>
 </template>
@@ -19,6 +20,11 @@
         data(){
             return{
 
+            }
+        },
+        methods:{
+            logout(){
+                this.$store.commit("REMOVE_INFO")
             }
         }
     }
@@ -40,9 +46,14 @@
             padding: 0;
         }
         a{
+            color: white;
             font-weight: 300;
-            padding: 0 30px;
+            padding: 0 15px;
             font-family:"Microsoft YaHei",serif;
+            text-decoration: none;
+            &:visited{
+                color: #333333;
+            }
         }
     }
 </style>

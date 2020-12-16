@@ -5,17 +5,39 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/login/index')
+  },
+  {
     path:'/',
     component:()=>import('../views/home/index'),
     redirect: '/home',
-    children: [{
-      path: '/home',
-      name: 'home',
-      component: () => import('../components/home/courseArea'),
-      meta:{
-        requireAuth:true
-      }
-    }]
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        component: () => import('../components/home/myCourse'),
+        meta:{
+          requireAuth:true
+        }
+      },
+      {
+        path:'notice',
+        name:'allNotice',
+        component:() => import('../components/home/allNotice')
+      },
+      {
+        path:'homework',
+        name:'allHomework',
+        component:() => import('../components/home/allHomework')
+      },
+      {
+        path:'archive',
+        name:'archive',
+        component:() => import('../components/home/archive')
+      },
+    ]
   },
   {
     path:'/course',
@@ -56,11 +78,6 @@ const routes = [
       requireAuth:true
     }
   },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/login/index')
-  }
 ]
 
 const router = new VueRouter({

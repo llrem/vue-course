@@ -4,7 +4,12 @@
 
 <script>
     export default {
-        name: "courseInfo"
+        name: "courseInfo",
+        data(){
+            return{
+
+            }
+        }
     }
 </script>
 
