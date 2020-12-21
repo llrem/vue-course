@@ -6,20 +6,19 @@
         <div class="option">
             <router-link to="/home"><a>我的课程</a></router-link>/
             <router-link to="/notice"><a>通知</a></router-link>/
-            <router-link to="/homework"><a>作业</a></router-link>/
-            <router-link to="/archive"><a>归档课程</a></router-link>
+            <router-link to="/homework"><a>作业</a></router-link><label v-if="role==='admin'">/</label>
+            <router-link to="/archive" v-if="role==='admin'"><a>归档课程</a></router-link>
             <router-link to="/login"><a class="out" @click="logout">退出</a></router-link>
         </div>
     </div>
 </template>
 
 <script>
-
     export default {
         name: "Navbar",
         data(){
             return{
-
+                role:this.$store.getters.getRole,
             }
         },
         methods:{

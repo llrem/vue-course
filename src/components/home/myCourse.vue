@@ -78,7 +78,8 @@
                     courseInfo:this.form,
                     admin:JSON.parse(userInfo)
                 }).then((response) => {
-                    console.log(response.data.data())
+                    console.log(response.data.data)
+                    this.$router.go(0)
                 })
                 this.dialogFormVisible = false
             },
